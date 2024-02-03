@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import ResultRow from './ResultRow';
 
 interface Course {
     name: string;
+    CourseTitle: string;
 }
 
 interface Professor {
     InstructorFirst: string,
     InstructorLast: string,
-    Label: string
+    Label: string,
+    AvgGPA: number  // remember add avggpa later
 }
 
 interface AutocompleteProps {
@@ -28,8 +31,7 @@ export default function Autocomplete(props: AutocompleteProps) {
 
         let courses = await data.json();
         courses = courses.map((course: any) => {
-            let name = course.Subject + " " + course.CourseNumber
-            return ({name: name})
+            return ({name: course.Subject + " " + course.CourseNumber, CourseTitle: course.CourseTitle})
         });
         setCourses(courses);
     }
@@ -73,28 +75,24 @@ export default function Autocomplete(props: AutocompleteProps) {
         setSearchTerm(currentSearchTerm);
         if (currentSearchTerm.length > 0) {
             props.category === "course" ? filterCourses(currentSearchTerm) : filterProfessors(currentSearchTerm);
+        } else {
+            setSearchResults([]);
+            setSearchProfs([]);
         }
     }
     
     return (
-        <div className="dropdown mb-8">
-            <input className="input input-bordered" placeholder={`Select a ${props.category}`} onChange={handleInputChange}/>
-            <ul tabIndex={0} className={`${(props.category === "course" ? searchResults.length : searchProfs.length) === 0 ? 'hidden' : 'display' } dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto`}>
-                {
-                    props.category === "course" ?
-                    searchResults.map((course, index) => (
-                        <li key={index}>
-                            <a href="#" className="hover:bg-primary-100">{course.name}</a>
-                        </li>
-                    )) :
-                    // Fill with professors
-                    searchProfs.map((professor, index) => (
-                        <li key={index}>
-                            <a href="#" className="hover:bg-primary-100">{professor.Label}</a>
-                        </li>
-                    ))
-                }
-            </ul>
+        <div className='flex flex-col items-center w-[48rem]'>
+            <input className="input input-bordered mb-4" placeholder={`Select a ${props.category}`} onChange={handleInputChange}/>
+            {
+                props.category === "course" ?
+                searchResults.map((course, index) => (
+                    <ResultRow category={props.category} result={course} key={index} />
+                )) :
+                searchProfs.map((professor, index) => (
+                    <ResultRow category={props.category} result={professor} key={index} />
+                ))
+            }
         </div>
     )
 }
