@@ -21,7 +21,7 @@ export async function loader({
     }
 
 export default function Professor() {
-    const [professor, setProfessor] = useState<ProfessorInfo[]>([]);
+    const [professorInfo, setProfessor] = useState<ProfessorInfo[]>([]);
     const data = useLoaderData<typeof loader>();
 
     async function getProfessor() {
@@ -39,12 +39,24 @@ export default function Professor() {
         let callResult = await call.json();
         console.log(callResult.length);
 
-        setProfessor(callResult[0]);
+        setProfessor(callResult);
     };
+
+    useEffect(() => {
+        getProfessor();
+    });
 
     return (
         <div>
-            <h1>{data.firstname} {data.lastname}</h1>
+            {professorInfo.map((professor, index) => {
+                console.log(professor.Label);
+                return(
+                    <>
+                        <h1>{professor.Label}</h1>
+                        <h2>Average GPA: {professor.AvgGPA}</h2>
+                    </>
+                )
+            })}
         </div>
     )
 }
