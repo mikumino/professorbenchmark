@@ -47,9 +47,9 @@ export default function Professor() {
         });
         let callResult = await call.json();
         let firstResult = await callResult;
-
+        console.log('lol');
+        
         setProfessor(firstResult);
-        getProfessorClasses();
     };
 
     async function getProfessorClasses() {
@@ -73,7 +73,8 @@ export default function Professor() {
 
     useEffect(() => {
         getProfessor();
-    });
+        getProfessorClasses();
+    }, []);
 
     return (
         <div>
