@@ -13,7 +13,7 @@ export default function Index() {
     <>
       <Navbar />
       <div className="max-3-xl flex flex-col">
-    
+        
       </div>
     </>
   );
