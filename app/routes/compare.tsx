@@ -15,9 +15,7 @@ export default function Compare() {
             <Navbar/>
             <div className="">
                 <div className="gap-x-60 flex flex-row justify-center">
-                    {/* <Sidebar/> */}
-                    <Stats/>
-                    <Stats/>
+
                 </div>
             </div>
 
