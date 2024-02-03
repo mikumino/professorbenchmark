@@ -3,23 +3,6 @@ import { useLoaderData } from "@remix-run/react";
 import { getProfessor, getProfessorClasses } from "~/utils/apiUtils";
 import React, { useState, useEffect } from 'react';
 
-interface ProfessorInfo {
-    id: number,
-    InstructorFirst: string,
-    InstructorLast: string,
-    TotalEnrollment: number,
-    AvgGPA: number,
-    Label: string
-}
-
-interface CourseData {
-    subject: string;
-    number: string;
-    InstructorFirst: string;
-    InstructorLast: string;
-    AvgGPA: number;
-}
-
 export async function loader({
     params,
   }: LoaderFunctionArgs) {
