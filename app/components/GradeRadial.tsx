@@ -3,7 +3,7 @@ export default function GradeRadial(props: { grade: number }) {
     let letterGrade: string;
     let color: string;
     switch (true) {
-        case grade >= 3.7:
+        case grade >= 3.6:
             letterGrade = "A";
             color = "text-green-500";
             break;

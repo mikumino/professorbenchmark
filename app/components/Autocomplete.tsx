@@ -50,7 +50,7 @@ export default function Autocomplete(props: AutocompleteProps) {
         professors = professors.map((professor: any) => {
             return ({InstructorFirst: professor.InstructorFirst, InstructorLast: professor.InstructorLast, Label: professor.Label, AvgGPA: professor.AvgGPA, id: professor.id})
         });
-        professors.sort((x: any, y: any) => (x.InstructorLast > y.InstructorLast) ? 1 : ((y.InstructorLast > x.InstructorLast) ? -1 : 0)); 
+        professors.sort((x: ProfessorInfo, y: ProfessorInfo) => (x.InstructorLast > y.InstructorLast) ? 1 : ((y.InstructorLast > x.InstructorLast) ? -1 : 0)); 
         setProfessors(professors);
     }
 
@@ -61,7 +61,7 @@ export default function Autocomplete(props: AutocompleteProps) {
     const filterCourses = (searchTerm: string) => {        
         const results = courses.filter(course => 
             course.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-            );
+            ).slice(0, 50);
         setSearchResults(results);
     }
 
