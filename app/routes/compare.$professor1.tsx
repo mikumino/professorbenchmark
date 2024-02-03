@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useMatches, useOutlet } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import Navbar from "~/components/Navbar";
+import Autocomplete from "~/components/Autocomplete";
 
 import Stats from "~/components/Stats";
 import { getProfessor } from "~/utils/apiUtils";
@@ -18,7 +18,7 @@ export default function Column() {
     const [professorInfo, setProfessor] = useState<ProfessorInfo>();
     const data = useLoaderData<typeof loader>();
     console.log(data.firstname, data.lastname);
-    
+    const outlet = useOutlet();
     
     useEffect(() => {
         const fetchProfessor = async () => {
@@ -34,10 +34,10 @@ export default function Column() {
     return (
         <>
             <div className="flex flex-row w-[64rem]">
-                <div className="flex flex-col w-1/2 m-8">
+                <div className="flex flex-col w-1/2 m-8 shadow-xl rounded-xl p-8">
                     {professorInfo ? <Stats professor={professorInfo} /> : <h1>Loading...</h1>}
                 </div>
-                <Outlet />
+                {outlet || <Autocomplete category="professor" />}
             </div>
         </>
         // <h1>lol</h1>

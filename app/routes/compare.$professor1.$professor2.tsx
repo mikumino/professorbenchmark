@@ -31,7 +31,7 @@ export default function Column() {
 
     return (
         <>
-            <div className="flex flex-col w-1/2 m-8">
+            <div className="flex flex-col w-1/2 m-8 shadow-xl rounded-xl p-8">
                 {professorInfo ? <Stats professor={professorInfo} /> : <h1>Loading...</h1>}
             </div>
         </>
