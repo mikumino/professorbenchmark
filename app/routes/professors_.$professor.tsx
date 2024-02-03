@@ -37,9 +37,9 @@ export default function Professor() {
             }
         });
         let callResult = await call.json();
-        console.log(callResult.length);
+        let firstResult = await callResult;
 
-        setProfessor(callResult);
+        setProfessor(firstResult);
     };
 
     useEffect(() => {
@@ -49,13 +49,14 @@ export default function Professor() {
     return (
         <div>
             {professorInfo.map((professor, index) => {
-                console.log(professor.Label);
-                return(
-                    <>
-                        <h1>{professor.Label}</h1>
-                        <h2>Average GPA: {professor.AvgGPA}</h2>
-                    </>
-                )
+                if(professor.AvgGPA || professor.Label === "Sen Wang") {
+                    return(
+                        <>
+                            <h1>{professor.Label}</h1>
+                            <h2>Average GPA: {professor.AvgGPA ? professor.AvgGPA.toFixed(2) : "N/A"}</h2>
+                        </>
+                    )
+                }
             })}
         </div>
     )
