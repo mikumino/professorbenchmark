@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import Navbar from "~/components/Navbar";
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,10 +10,11 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div>
-      <h1 className="text-4xl">ProfessorBenchmark</h1>
-      <p>Compare professors</p>
-      <button className="btn">hey</button>
-    </div>
+    <>
+      <Navbar />
+      <div className="max-3-xl flex flex-col">
+    
+      </div>
+    </>
   );
 }
