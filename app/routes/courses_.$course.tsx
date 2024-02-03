@@ -60,7 +60,7 @@ export default function Course() {
                     console.log(course.InstructorFirst + course.InstructorLast);
                     
                     return (
-                        <ResultRow key={index} category="professor" result={{Label: course.InstructorFirst + " " + course.InstructorLast, AvgGPA: course.AvgGPA}} />
+                        <ResultRow key={index} category="professor" result={{InstructorFirst: course.InstructorFirst, InstructorLast: course.InstructorLast, AvgGPA: course.AvgGPA}} />
                     )
                 })}
             </div>
