@@ -18,6 +18,7 @@ export default function Autocomplete(props: AutocompleteProps) {
     const [courses, setCourses] = useState<Course[]>([]);
     const [professors, setProfessors] = useState<Professor[]>([]);
     const [searchResults, setSearchResults] = useState<Course[]>([]);
+    const [searchProfs, setSearchProfs] = useState<Professor[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     async function getCourses() {
@@ -61,7 +62,10 @@ export default function Autocomplete(props: AutocompleteProps) {
     }
 
     const filterProfessors = (searchTerm: string) => {
-        // Fill with professors
+        const results = professors.filter(course => 
+            course.Label.toLowerCase().startsWith(searchTerm.toLowerCase())
+            );
+        setSearchProfs(results);
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +78,7 @@ export default function Autocomplete(props: AutocompleteProps) {
     return (
         <div className="dropdown mb-8">
             <input className="input input-bordered" placeholder={`Select a ${props.category}`} onChange={handleInputChange}/>
-            <ul tabIndex={0} className={`${searchResults.length === 0 ? 'hidden' : 'display' } dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto`}>
+            <ul tabIndex={0} className={`${(props.category === "course" ? searchResults.length : searchProfs.length) === 0 ? 'hidden' : 'display' } dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto`}>
                 {
                     props.category === "course" ?
                     searchResults.map((course, index) => (
@@ -83,7 +87,7 @@ export default function Autocomplete(props: AutocompleteProps) {
                         </li>
                     )) :
                     // Fill with professors
-                    professors.map((professor, index) => (
+                    searchProfs.map((professor, index) => (
                         <li key={index}>
                             <a href="#" className="hover:bg-primary-100">{professor.Label}</a>
                         </li>
