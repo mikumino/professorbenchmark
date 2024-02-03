@@ -10,10 +10,14 @@ export default function Sidebar() {
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> 
             <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                 {/* Sidebar content here */}
-                <li><a>College of Science</a></li>
                 <li><a>College of Agriculture</a></li>
-                <li><a>College of Fishing</a></li>
-                <li><a>College of Horses</a></li>
+                <li><a>College of Business</a></li>
+                <li><a>College of Education</a></li>
+                <li><a>College of Engineering</a></li>
+                <li><a>College of Environmental Design</a></li>
+                <li><a>College of Hospitality Management</a></li>
+                <li><a>College of Letters, Arts, and Social Sciences</a></li>
+                <li><a>College of Science</a></li>
             </ul>  
         </div>
     </div>
