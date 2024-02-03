@@ -33,6 +33,7 @@ export default function Course() {
 
     return (
         <>
+            <title>{subject} {number} @ Cal Poly Pomona - ProfessorBenchmark</title>
             <Navbar />
             <div className="max-w-3xl mx-auto mt-8">
                 <h1 className="text-4xl font-bold mb-4">{subject} {number}</h1>

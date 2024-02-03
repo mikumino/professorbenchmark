@@ -1,19 +1,20 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, MetaFunction } from "@remix-run/react";
 import { getProfessor, getProfessorClasses } from "~/utils/apiUtils";
 import GradeRadial from "~/components/GradeRadial";
 import React, { useState, useEffect } from 'react';
 import Navbar from "~/components/Navbar";
 import ResultRow from "~/components/ResultRow";
 
+
 export async function loader({
     params,
-  }: LoaderFunctionArgs) {
+}: LoaderFunctionArgs) {
     return json({
         firstname: params.professor ? params.professor.split('$')[0] : '',
         lastname: params.professor ? params.professor.split('$')[1] : ''
     });
-    }
+}
 
 export default function Professor() {
     const [professorInfo, setProfessor] = useState<ProfessorInfo>();
@@ -32,6 +33,7 @@ export default function Professor() {
     if(professorInfo) {
         return (
             <>
+                <title>{professorInfo.Label} @ Cal Poly Pomona - ProfessorBenchmark</title>
                 <Navbar />
                 <div className="max-w-3xl mx-auto mt-8">
                     <div className="flex flex-row w-full">
