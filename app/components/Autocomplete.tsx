@@ -4,12 +4,19 @@ interface Course {
     name: string;
 }
 
+interface Professor {
+    InstructorFirst: string,
+    InstructorLast: string,
+    Label: string
+}
+
 interface AutocompleteProps {
     category: string
 }
 
 export default function Autocomplete(props: AutocompleteProps) {
     const [courses, setCourses] = useState<Course[]>([]);
+    const [professors, setProfessors] = useState<Professor[]>([]);
     const [searchResults, setSearchResults] = useState<Course[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -27,8 +34,24 @@ export default function Autocomplete(props: AutocompleteProps) {
         setCourses(courses);
     }
 
+    async function getProfessors() {
+        let data = await fetch("https://api.cppscheduler.com/data/professors/findAll", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        let professors = await data.json();
+        professors = professors.map((professor: any) => {
+            return ({InstructorFirst: professor.InstructorFirst, InstructorLast: professor.InstructorLast, Label: professor.Label})
+        });
+        professors.sort((x: any, y: any) => (x.InstructorLast > y.InstructorLast) ? 1 : ((y.InstructorLast > x.InstructorLast) ? -1 : 0)); 
+        setProfessors(professors);
+    }
+
     useEffect(() => {
-        getCourses();
+        props.category === "course" ? getCourses() : getProfessors();
     }, []);
 
     const filterCourses = (searchTerm: string) => {
@@ -61,9 +84,11 @@ export default function Autocomplete(props: AutocompleteProps) {
                         </li>
                     )) :
                     // Fill with professors
-                    <li>
-                        <a href="#" className="hover:bg-primary-100">Professor</a>
-                    </li>
+                    professors.map((professor, index) => (
+                        <li key={index}>
+                            <a href="#" className="hover:bg-primary-100">{professor.Label}</a>
+                        </li>
+                    ))
                 }
             </ul>
         </div>
