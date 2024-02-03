@@ -3,6 +3,23 @@ import { useLoaderData } from "@remix-run/react";
 import { getProfessor, getProfessorClasses } from "~/utils/apiUtils";
 import React, { useState, useEffect } from 'react';
 
+interface ProfessorInfo {
+    id: number,
+    InstructorFirst: string,
+    InstructorLast: string,
+    TotalEnrollment: number,
+    AvgGPA: number,
+    Label: string
+}
+
+interface CourseData {
+    subject: string;
+    number: string;
+    InstructorFirst: string;
+    InstructorLast: string;
+    AvgGPA: number;
+}
+
 export async function loader({
     params,
   }: LoaderFunctionArgs) {
@@ -32,7 +49,9 @@ export default function Professor() {
                 if(professor.AvgGPA || professor.Label === "Sen Wang") {
                     return(
                         <>
-                            <h1>{professor.Label}</h1>
+                        <div className = "flex flex-row justify-center">
+                        <div className = "flex-col mt-8 mx-10">
+                            <h1  className = "text-4xl font-bold">{professor.Label}</h1>
                             <h2>Average GPA: {professor.AvgGPA ? professor.AvgGPA.toFixed(2) : "N/A"}</h2>
                             {courses.map((course, index) => {
                                 if(course.AvgGPA) {
@@ -41,6 +60,11 @@ export default function Professor() {
                                     )
                                 }
                             })}
+                            </div>
+                        <div className = "flex-col mt-8 mx-10">
+                            <h1 className = "text-4xl font-bold"> Compare!</h1>
+                        </div>
+                        </div>
                         </>
                     )
                 }
