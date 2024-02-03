@@ -36,6 +36,7 @@ export async function getProfessorClasses(firstname: string, lastname: string) {
     courses = courses.map((course: any) => {
         return ({subject: course.Subject, number: course.CourseNumber, InstructorFirst: course.InstructorFirst, InstructorLast: course.InstructorLast, AvgGPA: course.AvgGPA})
     });
+    courses.sort((x: CourseData, y: CourseData) => (x.number > y.number) ? 1 : ((y.number > x.number) ? -1 : 0)); 
     return courses;
 }
 
@@ -56,5 +57,6 @@ export async function getCourseData(subject: string, number: string) {
     courses = courses.map((course: any) => {
         return ({subject: course.Subject, number: course.CourseNumber, InstructorFirst: course.InstructorFirst, InstructorLast: course.InstructorLast, AvgGPA: course.AvgGPA})
     });
+    courses.sort((x: CourseData, y: CourseData) => (x.AvgGPA < y.AvgGPA) ? 1 : ((y.AvgGPA < x.AvgGPA) ? -1 : 0)); 
     return courses;
 }
