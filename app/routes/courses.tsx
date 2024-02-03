@@ -14,7 +14,7 @@ export default function Courses() {
         <>
             <div className="">
                 <Navbar />
-                <div className="max-3-xl flex flex-col mt-64 items-center">
+                <div className="max-3-xl flex flex-col mt-8 items-center">
                     <h1 className="text-4xl font-bold mb-4">Search by course</h1>
                     <Autocomplete category="course" />
                 </div>
