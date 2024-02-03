@@ -41,7 +41,7 @@ export default function Professor() {
                 <div className="flex w-full flex-col">
                     {courses.map((course, index) => {
                         return (
-                            <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} endItem={<GradeRadial grade={course.AvgGPA} />} key={index} />
+                            <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? `GPA: ${(course.AvgGPA.toFixed(2))}` : 'N/A'} endItem={<GradeRadial grade={course.AvgGPA} />} key={index} />
                         )
                     })}
                 </div>

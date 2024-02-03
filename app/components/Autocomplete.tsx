@@ -67,7 +67,7 @@ export default function Autocomplete(props: AutocompleteProps) {
 
     const filterProfessors = (searchTerm: string) => {
         const results = professors.filter(course => 
-            course.Label.toLowerCase().startsWith(searchTerm.toLowerCase())
+            course.Label.toLowerCase().includes(searchTerm.toLowerCase())
             );
         setSearchProfs(results);
     }
