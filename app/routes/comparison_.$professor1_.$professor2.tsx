@@ -49,7 +49,6 @@ export default function Professor() {
         let firstResult = await callResult;
 
         setProfessor(firstResult);
-        getProfessorClasses();
     };
 
     async function getProfessorClasses() {
@@ -73,6 +72,7 @@ export default function Professor() {
 
     useEffect(() => {
         getProfessor();
+        getProfessorClasses();
     });
 
     return (
