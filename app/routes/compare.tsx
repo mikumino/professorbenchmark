@@ -1,4 +1,5 @@
 import { MetaFunction } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
 import Navbar from "~/components/Navbar";
 import Stats from "~/components/Stats";
 
@@ -15,7 +16,7 @@ export default function Compare() {
             <Navbar/>
             <div className="">
                 <div className="gap-x-60 flex flex-row justify-center">
-
+                    <Outlet />
                 </div>
             </div>
 
