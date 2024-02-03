@@ -4,13 +4,15 @@ import ResultRow from './ResultRow';
 interface Course {
     name: string;
     CourseTitle: string;
+    id: number
 }
 
 interface Professor {
     InstructorFirst: string,
     InstructorLast: string,
     Label: string,
-    AvgGPA: number  // remember add avggpa later
+    AvgGPA: number,
+    id: number
 }
 
 interface AutocompleteProps {
@@ -31,7 +33,7 @@ export default function Autocomplete(props: AutocompleteProps) {
 
         let courses = await data.json();
         courses = courses.map((course: any) => {
-            return ({name: course.Subject + " " + course.CourseNumber, CourseTitle: course.CourseTitle})
+            return ({name: course.Subject + " " + course.CourseNumber, CourseTitle: course.CourseTitle, id: course.id})
         });
         setCourses(courses);
     }
@@ -46,7 +48,7 @@ export default function Autocomplete(props: AutocompleteProps) {
 
         let professors = await data.json();
         professors = professors.map((professor: any) => {
-            return ({InstructorFirst: professor.InstructorFirst, InstructorLast: professor.InstructorLast, Label: professor.Label, AvgGPA: professor.AvgGPA})
+            return ({InstructorFirst: professor.InstructorFirst, InstructorLast: professor.InstructorLast, Label: professor.Label, AvgGPA: professor.AvgGPA, id: professor.id})
         });
         professors.sort((x: any, y: any) => (x.InstructorLast > y.InstructorLast) ? 1 : ((y.InstructorLast > x.InstructorLast) ? -1 : 0)); 
         setProfessors(professors);
