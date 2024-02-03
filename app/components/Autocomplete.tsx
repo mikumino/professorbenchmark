@@ -92,7 +92,7 @@ export default function Autocomplete(props: AutocompleteProps) {
                     <ResultRow link={course.name} category={props.category} headerText={course.name} subtitleText={course.CourseTitle} key={index} />
                 )) :
                 searchProfs.map((professor, index) => (
-                    <ResultRow link={`${professor.InstructorFirst}$${professor.InstructorLast}`} category={props.category} headerText={`${professor.InstructorFirst} ${professor.InstructorLast}`} subtitleText={professor.AvgGPA ? (professor.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
+                    <ResultRow link={`${professor.InstructorFirst}$${professor.InstructorLast}`} category={props.category} headerText={`${professor.InstructorFirst} ${professor.InstructorLast}`} subtitleText={professor.AvgGPA ? `GPA: ${(professor.AvgGPA.toFixed(2))}` : 'N/A'} key={index} />
                 ))
             }
         </div>

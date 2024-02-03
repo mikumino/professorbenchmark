@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { getProfessor, getProfessorClasses } from "~/utils/apiUtils";
 import React, { useState, useEffect } from 'react';
 import Navbar from "~/components/Navbar";
@@ -34,12 +34,15 @@ export default function Professor() {
             <div className="max-w-3xl mx-auto mt-8">
                 <h1 className="text-4xl font-bold mb-4">{professorInfo ? professorInfo.InstructorFirst + " " + professorInfo.InstructorLast : ''}</h1>
                 {/* <h3 className="text-2xl font-bold mb-4">Average GPA: {professorInfo ? professorInfo.AvgGPA.toFixed(2) : ''}</h3> */}
-                <div className="flex flex-col">
-                    {courses.map((course, index) => {
-                        return (
-                            <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
-                        )
-                    })}
+                <div className="flex flex-row w-full gap-3">
+                    <div className="flex w-full flex-col">
+                        {courses.map((course, index) => {
+                            return (
+                                <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
+                            )
+                        })}
+                    </div>
+                    <Link to={professorInfo ? `/compare/${professorInfo.InstructorFirst}$${professorInfo.InstructorLast}` : '/'} className="btn btn-primary">Compare</Link>
                 </div>
             </div>
         </>
