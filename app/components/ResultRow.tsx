@@ -5,6 +5,7 @@ interface ResultRowProps {
     category: string;
     headerText: string;
     subtitleText: string;
+    endItem: React.ReactNode;
 }
 
 export default function ResultRow(props: ResultRowProps) {
@@ -15,6 +16,9 @@ export default function ResultRow(props: ResultRowProps) {
                     <div className="flex flex-col text-left w-full">
                         <h1 className="text-lg font-bold">{props.headerText}</h1>
                         <p className="text-sm">{props.subtitleText}</p>
+                    </div>
+                    <div className="text-right">
+                        {props.endItem}
                     </div>
                 </Link>
                 <div className="divider"></div>
