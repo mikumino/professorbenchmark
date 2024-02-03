@@ -4,14 +4,6 @@ import { useEffect, useState } from "react";
 import Navbar from "~/components/Navbar";
 import ResultRow from "~/components/ResultRow";
 
-interface CourseData {
-    subject: string;
-    number: string;
-    InstructorFirst: string;
-    InstructorLast: string;
-    AvgGPA: number;
-}
-
 export async function loader({
     params,
   }: LoaderFunctionArgs) {
