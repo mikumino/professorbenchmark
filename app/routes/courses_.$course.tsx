@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { getCourseData } from "~/utils/apiUtils";
 import Navbar from "~/components/Navbar";
 import ResultRow from "~/components/ResultRow";
 
@@ -21,26 +22,12 @@ export default function Course() {
 
     const [courseData, setCourseData] = useState<CourseData[]>([]);
 
-    async function getCourseData() {
-        const data = await fetch("https://api.cppscheduler.com/data/instructions/findByCourse", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({Subject: subject, CourseNumber: number})
-        });
-
-        let courses = await data.json();
-        courses = courses.map((course: any) => {
-            return ({subject: course.Subject, number: course.CourseNumber, InstructorFirst: course.InstructorFirst, InstructorLast: course.InstructorLast, AvgGPA: course.AvgGPA})
-        });
-        setCourseData(courses);
-        console.log(courses);
-        
-    }
-
     useEffect(() => {
-        getCourseData();
+        const fetchCourseData = async () => {
+            setCourseData(await getCourseData(subject, number));
+        };
+
+        fetchCourseData();
     }, [])
 
     return (
