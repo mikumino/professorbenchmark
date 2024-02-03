@@ -4,7 +4,7 @@ export default function Navbar() {
             <div className="navbar bg-base-100 rounded-xl shadow-lg">
                 <div className="flex-1">
                     <a href="/" className="btn btn-ghost text-xl">
-                        ProfessorBenchmark
+                        ProfessorBenchmark 🔥
                     </a>
                 </div>
                 <div className="flex-none">
