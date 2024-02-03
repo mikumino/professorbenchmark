@@ -11,7 +11,8 @@ export async function getProfessor(firstname: string, lastname: string) {
             'Content-Type': 'application/json'
         }
     });
-    return await data.json();
+    const professor = await data.json();
+    return professor[0];
 }
 
 export async function getProfessorClasses(firstname: string, lastname: string) {

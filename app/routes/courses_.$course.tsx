@@ -36,7 +36,6 @@ export default function Course() {
             <div className="max-w-3xl mx-auto mt-8">
                 <h1 className="text-4xl font-bold mb-4">{subject} {number}</h1>
                 {courseData.map((course, index) => {
-                    console.log(course.InstructorFirst + course.InstructorLast);
                     
                     return (
                         <ResultRow link={`${course.InstructorFirst}$${course.InstructorLast}`} category={`professor`} headerText={`${course.InstructorFirst} ${course.InstructorLast}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />

@@ -2,6 +2,8 @@ import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getProfessor, getProfessorClasses } from "~/utils/apiUtils";
 import React, { useState, useEffect } from 'react';
+import Navbar from "~/components/Navbar";
+import ResultRow from "~/components/ResultRow";
 
 export async function loader({
     params,
@@ -13,7 +15,7 @@ export async function loader({
     }
 
 export default function Professor() {
-    const [professorInfo, setProfessor] = useState<ProfessorInfo[]>([]);
+    const [professorInfo, setProfessor] = useState<ProfessorInfo>();
     const [courses, setCourses] = useState<CourseData[]>([]);
     const data = useLoaderData<typeof loader>();
 
@@ -27,32 +29,20 @@ export default function Professor() {
     }, []);
 
     return (
-        <div>
-            {professorInfo.map((professor, index) => {
-                if(professor.AvgGPA || professor.Label === "Sen Wang") {
-                    return(
-                        <>
-                        <div className = "flex flex-row justify-center">
-                        <div className = "flex-col mt-8 mx-10">
-                            <h1  className = "text-4xl font-bold">{professor.Label}</h1>
-                            <h2>Average GPA: {professor.AvgGPA ? professor.AvgGPA.toFixed(2) : "N/A"}</h2>
-                            {courses.map((course, index) => {
-                                if(course.AvgGPA) {
-                                    return(
-                                        <p>{course.subject} {course.number} - Avg GPA: {course.AvgGPA ? course.AvgGPA.toFixed(2) : "N/A"}</p>
-                                    )
-                                }
-                            })}
-                            </div>
-                        <div className = "flex-col mt-8 mx-10">
-                            <h1 className = "text-4xl font-bold"> Compare!</h1>
-                        </div>
-                        </div>
-                        </>
-                    )
-                }
-            })}
-        </div>
+        <>
+            <Navbar />
+            <div className="max-w-3xl mx-auto mt-8">
+                <h1 className="text-4xl font-bold mb-4">{professorInfo ? professorInfo.InstructorFirst + " " + professorInfo.InstructorLast : ''}</h1>
+                {/* <h3 className="text-2xl font-bold mb-4">Average GPA: {professorInfo ? professorInfo.AvgGPA.toFixed(2) : ''}</h3> */}
+                <div className="flex flex-col">
+                    {courses.map((course, index) => {
+                        return (
+                            <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
+                        )
+                    })}
+                </div>
+            </div>
+        </>
     )
 }
 
