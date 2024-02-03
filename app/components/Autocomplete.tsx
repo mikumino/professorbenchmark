@@ -30,7 +30,6 @@ export default function Autocomplete(props: AutocompleteProps) {
             let name = course.Subject + " " + course.CourseNumber
             return ({name: name})
         });
-        console.log('ran')
         setCourses(courses);
     }
 
@@ -67,7 +66,7 @@ export default function Autocomplete(props: AutocompleteProps) {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
-        if (searchTerm.length > 1) {
+        if (searchTerm.length > 0) {
             props.category === "course" ? filterCourses(searchTerm) : filterProfessors(searchTerm);
         }
     }
@@ -75,7 +74,7 @@ export default function Autocomplete(props: AutocompleteProps) {
     return (
         <div className="dropdown mb-8">
             <input className="input input-bordered" placeholder={`Select a ${props.category}`} onChange={handleInputChange}/>
-            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto">
+            <ul tabIndex={0} className={`${searchResults.length === 0 ? 'hidden' : 'display' } dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto`}>
                 {
                     props.category === "course" ?
                     searchResults.map((course, index) => (
