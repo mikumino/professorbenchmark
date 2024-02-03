@@ -32,17 +32,17 @@ export default function Professor() {
         <>
             <Navbar />
             <div className="max-w-3xl mx-auto mt-8">
-                <h1 className="text-4xl font-bold mb-4">{professorInfo ? professorInfo.InstructorFirst + " " + professorInfo.InstructorLast : ''}</h1>
+                <div className="flex flex-row">
+                    <h1 className="text-4xl font-bold mb-4 mr-4">{professorInfo ? professorInfo.InstructorFirst + " " + professorInfo.InstructorLast : ''}</h1> 
+                    <Link to={professorInfo ? `/compare/${professorInfo.InstructorFirst}$${professorInfo.InstructorLast}` : '/'} className="btn bg-green-800">Compare</Link>
+                </div>
                 {/* <h3 className="text-2xl font-bold mb-4">Average GPA: {professorInfo ? professorInfo.AvgGPA.toFixed(2) : ''}</h3> */}
-                <div className="flex flex-row w-full gap-3">
-                    <div className="flex w-full flex-col">
-                        {courses.map((course, index) => {
-                            return (
-                                <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
-                            )
-                        })}
-                    </div>
-                    <Link to={professorInfo ? `/compare/${professorInfo.InstructorFirst}$${professorInfo.InstructorLast}` : '/'} className="btn btn-primary">Compare</Link>
+                <div className="flex w-full flex-col">
+                    {courses.map((course, index) => {
+                        return (
+                            <ResultRow link={`${course.subject}%20${course.number}`} category={`course`} headerText={`${course.subject} ${course.number}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
+                        )
+                    })}
                 </div>
             </div>
         </>
