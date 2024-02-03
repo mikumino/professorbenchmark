@@ -37,6 +37,9 @@ export default function Professor() {
                     <h1 className="text-4xl font-bold mb-4 mr-4">{professorInfo ? professorInfo.InstructorFirst + " " + professorInfo.InstructorLast : ''}</h1> 
                     <Link to={professorInfo ? `/compare/${professorInfo.InstructorFirst}$${professorInfo.InstructorLast}` : '/'} className="btn bg-green-800">Compare</Link>
                 </div>
+                <div className="flex flex-row">
+                    <h1 className="text-2xl mb-4 mr-4">{professorInfo ? "Average GPA: " + (professorInfo.AvgGPA ? professorInfo.AvgGPA.toFixed(2) : "N/A") : ''}</h1>
+                </div>
                 {/* <h3 className="text-2xl font-bold mb-4">Average GPA: {professorInfo ? professorInfo.AvgGPA.toFixed(2) : ''}</h3> */}
                 <div className="flex w-full flex-col">
                     {courses.map((course, index) => {
