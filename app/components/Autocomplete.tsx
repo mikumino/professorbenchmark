@@ -54,7 +54,7 @@ export default function Autocomplete(props: AutocompleteProps) {
         props.category === "course" ? getCourses() : getProfessors();
     }, []);
 
-    const filterCourses = (searchTerm: string) => {
+    const filterCourses = (searchTerm: string) => {        
         const results = courses.filter(course => 
             course.name.toLowerCase().startsWith(searchTerm.toLowerCase())
             );
@@ -69,9 +69,10 @@ export default function Autocomplete(props: AutocompleteProps) {
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-        if (searchTerm.length > 0) {
-            props.category === "course" ? filterCourses(searchTerm) : filterProfessors(searchTerm);
+        const currentSearchTerm = event.target.value;
+        setSearchTerm(currentSearchTerm);
+        if (currentSearchTerm.length > 0) {
+            props.category === "course" ? filterCourses(currentSearchTerm) : filterProfessors(currentSearchTerm);
         }
     }
     
