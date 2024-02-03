@@ -4,13 +4,21 @@ interface Course {
     name: string;
 }
 
+interface Professor {
+    InstructorFirst: string,
+    InstructorLast: string,
+    Label: string
+}
+
 interface AutocompleteProps {
     category: string
 }
 
 export default function Autocomplete(props: AutocompleteProps) {
     const [courses, setCourses] = useState<Course[]>([]);
+    const [professors, setProfessors] = useState<Professor[]>([]);
     const [searchResults, setSearchResults] = useState<Course[]>([]);
+    const [searchProfs, setSearchProfs] = useState<Professor[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     async function getCourses() {
@@ -23,12 +31,27 @@ export default function Autocomplete(props: AutocompleteProps) {
             let name = course.Subject + " " + course.CourseNumber
             return ({name: name})
         });
-        console.log('ran')
         setCourses(courses);
     }
 
+    async function getProfessors() {
+        let data = await fetch("https://api.cppscheduler.com/data/professors/findAll", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        let professors = await data.json();
+        professors = professors.map((professor: any) => {
+            return ({InstructorFirst: professor.InstructorFirst, InstructorLast: professor.InstructorLast, Label: professor.Label})
+        });
+        professors.sort((x: any, y: any) => (x.InstructorLast > y.InstructorLast) ? 1 : ((y.InstructorLast > x.InstructorLast) ? -1 : 0)); 
+        setProfessors(professors);
+    }
+
     useEffect(() => {
-        getCourses();
+        props.category === "course" ? getCourses() : getProfessors();
     }, []);
 
     const filterCourses = (searchTerm: string) => {
@@ -39,12 +62,15 @@ export default function Autocomplete(props: AutocompleteProps) {
     }
 
     const filterProfessors = (searchTerm: string) => {
-        // Fill with professors
+        const results = professors.filter(course => 
+            course.Label.toLowerCase().startsWith(searchTerm.toLowerCase())
+            );
+        setSearchProfs(results);
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
-        if (searchTerm.length > 1) {
+        if (searchTerm.length > 0) {
             props.category === "course" ? filterCourses(searchTerm) : filterProfessors(searchTerm);
         }
     }
@@ -52,7 +78,7 @@ export default function Autocomplete(props: AutocompleteProps) {
     return (
         <div className="dropdown mb-8">
             <input className="input input-bordered" placeholder={`Select a ${props.category}`} onChange={handleInputChange}/>
-            <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto">
+            <ul tabIndex={0} className={`${(props.category === "course" ? searchResults.length : searchProfs.length) === 0 ? 'hidden' : 'display' } dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 max-h-80 flex-nowrap overflow-auto`}>
                 {
                     props.category === "course" ?
                     searchResults.map((course, index) => (
@@ -61,9 +87,11 @@ export default function Autocomplete(props: AutocompleteProps) {
                         </li>
                     )) :
                     // Fill with professors
-                    <li>
-                        <a href="#" className="hover:bg-primary-100">Professor</a>
-                    </li>
+                    searchProfs.map((professor, index) => (
+                        <li key={index}>
+                            <a href="#" className="hover:bg-primary-100">{professor.Label}</a>
+                        </li>
+                    ))
                 }
             </ul>
         </div>
