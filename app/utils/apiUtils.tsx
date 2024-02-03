@@ -12,7 +12,12 @@ export async function getProfessor(firstname: string, lastname: string) {
         }
     });
     const professor = await data.json();
-    return professor[0];
+    if(professor[0].AvgGPA)
+        return professor[0];
+    else if(professor[1] && professor[1].AvgGPA)
+        return professor[1];
+    else
+        return professor[0];
 }
 
 export async function getProfessorClasses(firstname: string, lastname: string) {
