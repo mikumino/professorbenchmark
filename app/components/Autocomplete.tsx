@@ -9,8 +9,15 @@ interface Course {
     number: string
 }
 
+interface Professor {
+    InstructorFirst: string,
+    InstructorLast: string,
+    Label: string
+}
+
 export default function Autocomplete(props: AutocompleteProps) {
     const [courses, setCourses] = useState<Course[]>([]);
+    const [professors, setProfessors] = useState<Professor[]>([]);
 
     async function getCourses() {
         let data = await fetch("https://api.cppscheduler.com/data/courses/findAll", {
@@ -25,11 +32,29 @@ export default function Autocomplete(props: AutocompleteProps) {
         setCourses(courses);
     }
 
+    async function getProfessors() {
+        let data = await fetch("https://api.cppscheduler.com/data/professors/findAll", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        let professors = await data.json();
+        professors = professors.map((professor: any) => {
+            return ({InstructorFirst: professor.InstructorFirst, InstructorLast: professor.InstructorLast, Label: professor.Label})
+        });
+        professors.sort((x: any, y: any) => (x.InstructorLast > y.InstructorLast) ? 1 : ((y.InstructorLast > x.InstructorLast) ? -1 : 0)); 
+        setProfessors(professors);
+    }
+
     useEffect(() => {
-        getCourses();
+        //getCourses();
+        getProfessors();
     }, []);   
     
-    console.log(courses);
+    //console.log(courses);
+    console.log(professors);
     
 
     return (
@@ -45,9 +70,11 @@ export default function Autocomplete(props: AutocompleteProps) {
                         </li>
                     )) :
                     // Fill with professors
-                    <li>
-                        <a href="#" className="hover:bg-primary-100">Professor</a>
-                    </li>
+                    professors.map((professor, index) => (
+                        <li key={index}>
+                            <a href="#" className="hover:bg-primary-100">{professor.Label}</a>
+                        </li>
+                    ))
                 }
             </ul>
         </div>
