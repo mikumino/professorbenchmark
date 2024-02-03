@@ -12,6 +12,7 @@ export default function Index() {
     <div>
       <h1 className="text-4xl">ProfessorBenchmark</h1>
       <p>Compare professors</p>
+      <button className="btn">hey</button>
     </div>
   );
 }
