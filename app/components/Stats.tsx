@@ -1,7 +1,7 @@
-export default function Stats() {
+export default function Stats(professor: ProfessorInfo) {
     return (
         <div className="stats stats-vertical shadow text-center">
-            <h1 className="text-4xl">Professor Name</h1>
+            <h1 className="text-4xl">{professor.InstructorFirst} {professor.InstructorLast}</h1>
             <div className="avatar placeholder justify-center py-3">
                     <div className="radial-progress text-green-600" style={{"--value":70}} role="progressbar">
                         <span className="text-3xl">SW</span>
