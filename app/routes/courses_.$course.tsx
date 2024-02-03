@@ -39,7 +39,7 @@ export default function Course() {
                     console.log(course.InstructorFirst + course.InstructorLast);
                     
                     return (
-                        <ResultRow key={index} category="professor" result={{InstructorFirst: course.InstructorFirst, InstructorLast: course.InstructorLast, AvgGPA: course.AvgGPA}} />
+                        <ResultRow link={`${course.InstructorFirst}$${course.InstructorLast}`} category={`professor`} headerText={`${course.InstructorFirst} ${course.InstructorLast}`} subtitleText={course.AvgGPA ? (course.AvgGPA.toFixed(2)) : 'N/A'} key={index} />
                     )
                 })}
             </div>
